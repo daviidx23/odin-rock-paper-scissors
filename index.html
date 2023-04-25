@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+</head>
+<body>
+    <script>
+        function getComputerChoice(){
+            const choice = ["Rock","Paper","Scissors"];
+            const random = Math.floor(Math.random() * choice.length);
+
+            return choice[random];
+        }
+
+        function gameRound(computerChoice,userChoice){
+            if(computerChoice=="Rock"){
+               if(userChoice=="SCISSORS"){
+                    return 1;
+               }
+               else if(userChoice=="PAPER"){
+                    return 2;
+               } 
+               else if(userChoice=="ROCK"){
+                    return 0;
+               }
+            }
+            else if(computerChoice=="Paper"){
+                if(userChoice=="SCISSORS"){
+                    return 2;
+               }
+               else if(userChoice=="PAPER"){
+                    return 0;
+               } 
+               else if(userChoice=="ROCK"){
+                    return 1;
+               }
+            }
+            else if(computerChoice=="Scissors"){
+                if(userChoice=="SCISSORS"){
+                    return 0;
+               }
+               else if(userChoice=="PAPER"){
+                    return 1;
+               } 
+               else if(userChoice=="ROCK"){
+                    return 2;
+               }
+            }
+        }
+
+        function game(){
+            let computerScore=0, userScore=0;
+            
+            for(let i=0;i<5;i++){
+                let value;
+                
+                let computerChoice = getComputerChoice();
+                let userChoice = prompt("What do you choose(Rock/Paper/Scissors)?: ");
+            
+                userChoiceUpper = userChoice.toUpperCase();
+
+                value = gameRound(computerChoice,userChoiceUpper);
+
+                if(value==0){
+                    computerScore++;
+                    userScore++;
+                    console.log(`It's a tie. User score = ${userScore} | Computer score = ${computerScore}`);
+                }
+                else if(value==1){
+                    computerScore++;
+                    console.log(`You Lose! ${computerChoice} beats ${userChoice}. User score = ${userScore} | Computer score = ${computerScore}`);
+                }
+                else{
+                    userScore++;
+                    console.log(`You Win! ${userChoice} beats ${computerChoice}. User score = ${userScore} | Computer score = ${computerScore}`);
+                }
+            }
+        }
+
+        game();
+    </script>
+</body>
+</html>
