@@ -7,7 +7,20 @@
     <title>Rock Paper Scissors</title>
 </head>
 <body>
+    <div class="buttons">
+        <button id="btnR">Rock</button>
+        <button id="btnP">Paper</button>
+        <button id="btnS">Scissors</button>
+    </div>
+    <div class="results">
+
+    </div>
+
+
     <script>
+        let userScore = 0;
+        let computerScore = 0;
+        
         function getComputerChoice(){
             const choice = ["Rock","Paper","Scissors"];
             const random = Math.floor(Math.random() * choice.length);
@@ -15,7 +28,7 @@
             return choice[random];
         }
 
-        function gameRound(computerChoice,userChoice){
+        function playRound(computerChoice,userChoice){
             if(computerChoice=="Rock"){
                if(userChoice=="SCISSORS"){
                     return 1;
@@ -51,36 +64,78 @@
             }
         }
 
-        function game(){
-            let computerScore=0, userScore=0;
-            
-            for(let i=0;i<5;i++){
-                let value;
-                
-                let computerChoice = getComputerChoice();
-                let userChoice = prompt("What do you choose(Rock/Paper/Scissors)?: ");
-            
-                userChoiceUpper = userChoice.toUpperCase();
 
-                value = gameRound(computerChoice,userChoiceUpper);
 
-                if(value==0){
-                    computerScore++;
-                    userScore++;
-                    console.log(`It's a tie. User score = ${userScore} | Computer score = ${computerScore}`);
-                }
-                else if(value==1){
-                    computerScore++;
-                    console.log(`You Lose! ${computerChoice} beats ${userChoice}. User score = ${userScore} | Computer score = ${computerScore}`);
+        function showResults(value,para){  
+            if(value==0){
+                computerScore++;
+                userScore++;
+            }
+            else if(value==1){
+                computerScore++;
+            }
+            else{
+                userScore++;
+            }
+            para.innerText = `User score = ${userScore} || Computer score = ${computerScore}`;
+            if(userScore>=5||computerScore>=5){
+                if(userScore>computerScore){
+                    win.innerText = "You Win!";
                 }
                 else{
-                    userScore++;
-                    console.log(`You Win! ${userChoice} beats ${computerChoice}. User score = ${userScore} | Computer score = ${computerScore}`);
+                    win.innerText = "You Loose!";
                 }
+                console.log(win);
+                return true;
             }
         }
+        
+        const div = document.querySelector('.results');
+        const para = document.createElement('p');
+        const buttonRock = document.querySelector('#btnR');
+        const buttonPaper = document.querySelector('#btnP');
+        const buttonScissors = document.querySelector('#btnS');
+        const win = document.createElement('p');
+        let finish = false;
+        let userChoice = "";
 
-        game();
+        console.log(finish);
+
+        buttonRock.addEventListener('click',() =>{
+            const computerChoice = getComputerChoice();
+            const round = playRound(computerChoice,'ROCK');
+            finish = showResults(round,para);
+            if(finish){
+                buttonRock.disabled = true;
+                buttonPaper.disabled = true;
+                buttonScissors.disabled = true;
+            };
+        });
+
+        buttonPaper.addEventListener('click',() =>{
+            const computerChoice = getComputerChoice();
+            const round = playRound(computerChoice,'PAPER');
+            finish = showResults(round,para);
+            if(finish){
+                buttonRock.disabled = true;
+                buttonPaper.disabled = true;
+                buttonScissors.disabled = true;             
+            };
+        });
+
+        buttonScissors.addEventListener('click',() =>{
+            const computerChoice = getComputerChoice();
+            const round = playRound(computerChoice,'SCISSORS');
+            finish = showResults(round,para);
+            if(finish){
+                buttonRock.disabled = true;
+                buttonPaper.disabled = true;
+                buttonScissors.disabled = true;
+            };
+        });
+
+        div.appendChild(para);
+        div.appendChild(win);
     </script>
 </body>
 </html>
